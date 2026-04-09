@@ -15,13 +15,13 @@
   函数对齐清单 (23 个函数全部实现)
 ```
   ┌───────┬──────────────────────────────────────────────────────────────────────────────────────┬───────────────────────────────────┐
-  │   #   │                                         函数                                         │        对应 Rust 源码位置         │
+  │   #   │                                         函数                                          │        对应 Rust 源码位置           │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
   │ 1-6   │ LayerCoverage::new/add_node/insert/query/range/range_overlaps                        │ layer_coverage.rs                 │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
   │ 7     │ LayerCoverageTuple                                                                   │ layer_coverage.rs:177-198         │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
-  │ 8     │ LayerKey + 排序                                                                      │ historic_layer_coverage.rs:17-43  │
+  │ 8     │ LayerKey + 排序                                                                       │ historic_layer_coverage.rs:17-43  │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
   │ 9-11  │ HistoricLayerCoverage::insert/get_version/trim                                       │ historic_layer_coverage.rs:62-130 │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
@@ -31,11 +31,11 @@
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
   │ 15-20 │ RangeSearchCollector::new/collect/pad_range/add_range/advance/choose_next_layer_type │ layer_map.rs:216-398              │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
-  │ 21    │ select_layer() — 完整 8 Cases                                                        │ layer_map.rs:473-594              │
+  │ 21    │ select_layer() — 完整 8 Cases                                                         │ layer_map.rs:473-594              │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
-  │ 22    │ range_search() 入口                                                                  │ layer_map.rs:596-618              │
+  │ 22    │ range_search() 入口                                                                   │ layer_map.rs:596-618              │
   ├───────┼──────────────────────────────────────────────────────────────────────────────────────┼───────────────────────────────────┤
-  │ 23    │ search_in_memory_layer (简化为参数传入)                                              │ layer_map.rs:723-746              │
+  │ 23    │ search_in_memory_layer (简化为参数传入)                                                 │ layer_map.rs:723-746              │
   └───────┴──────────────────────────────────────────────────────────────────────────────────────┴───────────────────────────────────┘
 ```
   测试结果: 10/10 PASS
@@ -48,4 +48,24 @@
   - T8: delta+image 混合场景
   - T9: trim 裁剪
   - T10: 部分覆盖 + inmem fallback
+```
+neon version
+```
+commit 39e4f234633fa480cebcdf09993628779d73c094 (HEAD -> main, origin/main, origin/HEAD)
+Author: John G. Crowley <53502854+johngcrowley@users.noreply.github.com>
+Date:   Tue Feb 17 19:25:51 2026 -0600
+
+    GCS Provider Bytes Range Headers (#12855)
+
+    ## Problem
+
+    Bytes range headers are not yet implemented for the GCS JSON API
+    interface in Neon,
+    [affecting](https://github.com/neondatabase/neon/blob/489c7a20f4ee23ae017d48ab18a9c24123d2b0ec/safekeeper/src/wal_backup.rs#L623)
+    `read_object` in SafeKeepers' `wal_backup.rs`, when reading partial
+    segments back from remote storage.
+
+    ## Summary of changes
+     * Handle bytes range header for GCS JSON API
+     * Testing
 ```
